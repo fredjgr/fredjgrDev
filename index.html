@@ -73,6 +73,7 @@
         .custom-scroll::-webkit-scrollbar { width: 4px; }
         .custom-scroll::-webkit-scrollbar-track { background: transparent; }
         .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        
         .player-expanded { display: none; }
         .player-container.is-expanded .player-minimized { display: none; }
         .player-container.is-expanded .player-expanded { display: block; }
@@ -103,6 +104,7 @@
         }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
+        /* Botón de pánico limpio */
         .glass-button {
             @apply bg-white/20 text-white font-bold py-4 px-8 rounded-full shadow-lg transition-all active:scale-95 animate-pulse-slow;
             border: 2px solid rgba(255, 255, 255, 0.4);
@@ -112,6 +114,12 @@
         section {
             backdrop-filter: blur(8px);
             background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 640px) {
+            .carousel-image-container {
+                height: 400px !important;
+            }
         }
     </style>
 </head>
@@ -178,7 +186,7 @@
 
     <section class="space-y-8 relative p-8 rounded-[2.5rem] border border-white/10 shadow-2xl">
         <div class="text-center group">
-            <h3 class="text-5xl md:text-6xl font-black font-display text-red-600 uppercase tracking-tighter">NUESTROS MEJORES MOMENTOS</h3>
+            <h3 class="text-4xl md:text-6xl font-black font-display text-red-600 uppercase tracking-tighter">NUESTROS MEJORES MOMENTOS</h3>
             <div id="typewriter-container" class="mt-8 min-h-[150px] flex flex-col items-center justify-center px-4">
                 <h4 id="tw-title" class="text-2xl font-bold text-primary mb-2 min-h-[1.5em] text-center"></h4>
                 <p id="tw-text" class="text-lg md:text-xl text-white italic max-w-2xl leading-relaxed min-h-[4em] text-center"></p>
@@ -188,15 +196,15 @@
             <div class="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar gap-4 rounded-2xl scroll-smooth" id="carousel-1">
                 <script>
                     for(let i=1; i<=21; i++) {
-                        document.write(`<div class="snap-center shrink-0 w-full h-[600px] bg-black/40 rounded-xl overflow-hidden flex items-center justify-center"><img class="h-full w-full object-contain" src="assets/img/momentos/imgcarruselmoment${i}.jpg"></div>`);
+                        document.write(`<div class="carousel-image-container snap-center shrink-0 w-full h-[600px] bg-black/40 rounded-xl overflow-hidden flex items-center justify-center"><img class="h-full w-full object-contain" src="assets/img/momentos/imgcarruselmoment${i}.jpg"></div>`);
                     }
                 </script>
             </div>
-            <button class="absolute left-8 top-1/2 -translate-y-1/2 size-14 rounded-full bg-black/60 hover:bg-primary backdrop-blur-md flex items-center justify-center text-white z-10" id="prev-1">
-                <span class="material-symbols-outlined !text-3xl">chevron_left</span>
+            <button class="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 size-10 md:size-14 rounded-full bg-black/40 md:bg-black/60 hover:bg-primary backdrop-blur-md flex items-center justify-center text-white z-10" id="prev-1">
+                <span class="material-symbols-outlined !text-2xl md:!text-3xl">chevron_left</span>
             </button>
-            <button class="absolute right-8 top-1/2 -translate-y-1/2 size-14 rounded-full bg-black/60 hover:bg-primary backdrop-blur-md flex items-center justify-center text-white z-10" id="next-1">
-                <span class="material-symbols-outlined !text-3xl">chevron_right</span>
+            <button class="absolute right-2 md:right-8 top-1/2 -translate-y-1/2 size-10 md:size-14 rounded-full bg-black/40 md:bg-black/60 hover:bg-primary backdrop-blur-md flex items-center justify-center text-white z-10" id="next-1">
+                <span class="material-symbols-outlined !text-2xl md:!text-3xl">chevron_right</span>
             </button>
         </div>
     </section>
@@ -207,7 +215,6 @@
             <video id="main-video" class="hidden w-full h-auto block mx-auto">
                 <source src="assets/video.mp4" type="video/mp4">
             </video>
-            
             <div id="video-overlay" class="aspect-video flex items-center justify-center bg-black/40">
                 <button class="size-24 rounded-full bg-primary/90 flex items-center justify-center text-white z-20 hover:scale-110 transition-transform shadow-lg" id="play-video-btn">
                     <span class="material-symbols-outlined !text-5xl">play_arrow</span>
@@ -217,7 +224,7 @@
         </div>
     </section>
 
-    <section class="flex flex-col items-center justify-center py-20 bg-transparent border-none shadow-none">
+    <section class="flex flex-col items-center justify-center py-20 relative overflow-visible">
         <button id="panic-button" class="glass-button">EN CASO DE PELIGRO ROMPA EL VIDRIO 🚨</button>
         <div id="panic-message" class="hidden opacity-0 bg-white text-slate-900 font-bold p-6 rounded-2xl shadow-2xl border-4 border-primary text-center max-w-sm mt-6">
             <p class="text-2xl mb-2">📢 ATENCIÓN:</p>
@@ -226,48 +233,50 @@
     </section>
 </main>
 
-<div class="player-container fixed bottom-6 left-6 z-[100]" id="music-player">
-    <div class="player-minimized music-gradient w-[280px] h-[64px] rounded-full shadow-2xl px-5 flex items-center justify-between text-white cursor-pointer hover:scale-105 transition-all" id="player-trigger-expand">
-        <div class="flex items-center gap-3 overflow-hidden">
-            <button class="size-8 rounded-full bg-white/20 flex items-center justify-center"><span class="material-symbols-outlined !text-xl">play_arrow</span></button>
+<div class="player-container fixed bottom-6 left-1/2 -translate-x-1/2 md:left-6 md:translate-x-0 z-[100]" id="music-player">
+    <div class="player-minimized music-gradient w-[310px] h-[64px] rounded-full shadow-2xl px-4 flex items-center justify-between text-white transition-all">
+        <div class="flex items-center gap-2 overflow-hidden cursor-pointer flex-1" id="player-trigger-expand">
+            <div class="size-9 rounded-full bg-white/20 flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined !text-xl">music_note</span>
+            </div>
             <div class="overflow-hidden">
-                <p class="font-bold text-xs truncate" id="mini-title">Cata, te amo bebé</p>
-                <p class="text-[9px] opacity-70">Nuestra Playlist</p>
+                <p class="font-bold text-[10px] truncate w-24" id="mini-title">Cata, te amo bebé</p>
+                <p class="text-[8px] opacity-70">En reproducción</p>
             </div>
         </div>
-        <span class="material-symbols-outlined !text-xl">expand_less</span>
+        <div class="flex items-center gap-3 bg-black/10 px-3 py-1.5 rounded-full">
+            <button class="hover:scale-110 active:scale-90 transition-transform" id="mini-prev"><span class="material-symbols-outlined !text-xl">skip_previous</span></button>
+            <button class="size-8 rounded-full bg-white text-player-teal flex items-center justify-center shadow-lg hover:scale-110 active:scale-90 transition-transform" id="mini-play-pause"><span class="material-symbols-outlined !text-xl" id="mini-play-icon">play_arrow</span></button>
+            <button class="hover:scale-110 active:scale-90 transition-transform" id="mini-next"><span class="material-symbols-outlined !text-xl">skip_next</span></button>
+        </div>
+        <div class="ml-2 opacity-50 cursor-pointer" id="player-trigger-expand-2"><span class="material-symbols-outlined !text-lg">expand_less</span></div>
     </div>
-    <div class="player-expanded w-[340px] bg-white rounded-[2.5rem] shadow-2xl border border-white/20 overflow-hidden text-slate-900">
-        <div class="bg-player-purple px-6 py-4 flex items-center justify-between text-white">
-            <span class="font-bold text-sm tracking-wide">Reproductor de Música</span>
-            <button class="hover:bg-white/20 rounded-full p-1 transition-colors" id="player-trigger-collapse"><span class="material-symbols-outlined text-lg">expand_more</span></button>
+    <div class="player-expanded w-[90vw] max-w-[320px] bg-white rounded-[2.5rem] shadow-2xl border border-white/20 overflow-hidden text-slate-900">
+        <div class="bg-player-purple px-5 py-3 flex items-center justify-between text-white">
+            <span class="font-bold text-xs">Música para Cata</span>
+            <button class="hover:bg-white/20 rounded-full p-1" id="player-trigger-collapse"><span class="material-symbols-outlined text-xl">expand_more</span></button>
         </div>
-        <div class="p-6">
-            <div class="aspect-square w-48 mx-auto rounded-3xl shadow-2xl music-gradient flex items-center justify-center mb-6 overflow-hidden relative">
-                <span class="material-symbols-outlined text-white/40 !text-7xl">music_note</span>
+        <div class="px-5 py-4">
+            <div class="aspect-square w-28 md:w-36 mx-auto rounded-3xl shadow-xl music-gradient flex items-center justify-center mb-4"><span class="material-symbols-outlined text-white/40 !text-4xl">music_note</span></div>
+            <div class="text-center mb-4">
+                <h4 class="font-extrabold text-base leading-tight" id="current-track-title">Cata, te amo bebé</h4>
+                <p class="text-[9px] text-slate-400 font-bold uppercase mt-1">Nuestra Playlist</p>
             </div>
-            <div class="text-center mb-6">
-                <h4 class="font-extrabold text-lg leading-tight text-slate-800" id="current-track-title">Cata, te amo bebé</h4>
-                <p class="text-[11px] text-slate-400 font-bold uppercase tracking-wider mt-1">Canciones para Cata</p>
+            <div class="space-y-1 mb-4">
+                <input type="range" id="main-progress-bar" value="0" min="0" max="100" class="w-full h-1 bg-slate-100 rounded-full appearance-none cursor-pointer accent-player-teal">
+                <div class="flex justify-between text-[9px] font-bold text-slate-400"><span id="current-time">0:00</span><span id="total-time">0:00</span></div>
             </div>
-            <div class="space-y-1 mb-6 px-2">
-                <input type="range" id="main-progress-bar" value="0" min="0" max="100" class="w-full h-1.5 bg-slate-100 rounded-full appearance-none cursor-pointer accent-player-teal">
-                <div class="flex justify-between text-[10px] font-bold text-slate-400">
-                    <span id="current-time">0:00</span>
-                    <span id="total-time">0:00</span>
-                </div>
+            <div class="flex items-center justify-center gap-5 mb-5">
+                <button class="text-slate-400" id="btn-prev"><span class="material-symbols-outlined !text-xl">skip_previous</span></button>
+                <button class="size-12 rounded-full music-gradient text-white flex items-center justify-center shadow-lg" id="btn-play-pause"><span class="material-symbols-outlined !text-2xl" id="main-play-icon">play_arrow</span></button>
+                <button class="text-slate-400" id="btn-next"><span class="material-symbols-outlined !text-xl">skip_next</span></button>
             </div>
-            <div class="flex items-center justify-center gap-6 mb-8">
-                <button class="text-slate-400 hover:text-player-teal" id="btn-prev"><span class="material-symbols-outlined !text-2xl">skip_previous</span></button>
-                <button class="size-14 rounded-full music-gradient text-white flex items-center justify-center hover:scale-110 transition-transform shadow-lg shadow-player-purple/40" id="btn-play-pause"><span class="material-symbols-outlined !text-3xl">play_arrow</span></button>
-                <button class="text-slate-400 hover:text-player-teal" id="btn-next"><span class="material-symbols-outlined !text-2xl">skip_next</span></button>
+            <div class="flex items-center gap-2 px-3 mb-4">
+                <span class="material-symbols-outlined text-slate-400 text-base">volume_down</span>
+                <input type="range" id="volume-control" min="0" max="1" step="0.01" value="1" class="flex-1">
+                <span class="material-symbols-outlined text-slate-400 text-base">volume_up</span>
             </div>
-            <div class="flex items-center gap-3 px-4 mb-8">
-                <span class="material-symbols-outlined text-slate-400 text-lg">volume_down</span>
-                <input type="range" id="volume-control" min="0" max="1" step="0.01" value="0.7" class="flex-1">
-                <span class="material-symbols-outlined text-slate-400 text-lg">volume_up</span>
-            </div>
-            <div class="border-t border-slate-100 pt-5"><div class="max-h-36 overflow-y-auto space-y-2 custom-scroll pr-1" id="playlist-container"></div></div>
+            <div class="border-t border-slate-50 pt-3"><div class="max-h-24 overflow-y-auto space-y-1 custom-scroll" id="playlist-container"></div></div>
         </div>
     </div>
 </div>
@@ -282,8 +291,12 @@
     const audio = new Audio();
     let isPlaying = false;
 
+    // Elementos del reproductor
     const playerContainer = document.getElementById('music-player');
-    const btnPlayPause = document.getElementById('btn-play-pause');
+    const miniPlayPause = document.getElementById('mini-play-pause');
+    const mainPlayPause = document.getElementById('btn-play-pause');
+    const miniPlayIcon = document.getElementById('mini-play-icon');
+    const mainPlayIcon = document.getElementById('main-play-icon');
     const progressBar = document.getElementById('main-progress-bar');
     const volumeControl = document.getElementById('volume-control');
     const currentTimeEl = document.getElementById('current-time');
@@ -305,64 +318,52 @@
         songs.forEach((song, index) => {
             const isActive = index === currentSongIndex;
             const item = document.createElement('div');
-            item.className = `flex items-center gap-3 p-2 rounded-xl cursor-pointer transition-all ${isActive ? 'bg-player-teal/10' : 'hover:bg-slate-50'}`;
-            item.innerHTML = `<div class="size-8 rounded-lg ${isActive ? 'music-gradient' : 'bg-slate-100'} flex items-center justify-center shrink-0"><span class="material-symbols-outlined ${isActive ? 'text-white' : 'text-slate-400'} !text-sm">graphic_eq</span></div><div class="overflow-hidden flex-1"><p class="text-[11px] font-bold text-slate-800 truncate">${song.title}</p></div>`;
+            item.className = `flex items-center gap-2 p-1.5 rounded-lg cursor-pointer ${isActive ? 'bg-player-teal/10' : 'hover:bg-slate-50'}`;
+            item.innerHTML = `<div class="size-6 rounded ${isActive ? 'music-gradient' : 'bg-slate-100'} flex items-center justify-center shrink-0"><span class="material-symbols-outlined ${isActive ? 'text-white' : 'text-slate-400'} !text-[10px]">graphic_eq</span></div><p class="text-[10px] font-bold text-slate-800 truncate">${song.title}</p>`;
             item.onclick = () => { loadSong(index); playAudio(); };
             playlistContainer.appendChild(item);
         });
     }
 
-    function playAudio() { audio.play(); isPlaying = true; btnPlayPause.innerHTML = '<span class="material-symbols-outlined !text-3xl">pause</span>'; }
-    function pauseAudio() { audio.pause(); isPlaying = false; btnPlayPause.innerHTML = '<span class="material-symbols-outlined !text-3xl">play_arrow</span>'; }
+    function updateIcons() {
+        const icon = isPlaying ? 'pause' : 'play_arrow';
+        miniPlayIcon.innerText = icon;
+        mainPlayIcon.innerText = icon;
+    }
 
-    btnPlayPause.onclick = () => isPlaying ? pauseAudio() : playAudio();
-    document.getElementById('btn-next').onclick = () => { currentSongIndex = (currentSongIndex + 1) % songs.length; loadSong(currentSongIndex); playAudio(); };
-    document.getElementById('btn-prev').onclick = () => { currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length; loadSong(currentSongIndex); playAudio(); };
+    function playAudio() { audio.play(); isPlaying = true; updateIcons(); }
+    function pauseAudio() { audio.pause(); isPlaying = false; updateIcons(); }
+    function toggleAudio() { isPlaying ? pauseAudio() : playAudio(); }
+    function nextSong() { currentSongIndex = (currentSongIndex + 1) % songs.length; loadSong(currentSongIndex); playAudio(); }
+    function prevSong() { currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length; loadSong(currentSongIndex); playAudio(); }
 
-    audio.ontimeupdate = () => { progressBar.value = (audio.currentTime / audio.duration) * 100 || 0; const m = Math.floor(audio.currentTime/60); const s = Math.floor(audio.currentTime%60); currentTimeEl.innerText = `${m}:${s<10?'0':''}${s}`; };
-    audio.onloadedmetadata = () => { const m = Math.floor(audio.duration/60); const s = Math.floor(audio.duration%60); totalTimeEl.innerText = `${m}:${s<10?'0':''}${s}`; };
+    miniPlayPause.onclick = (e) => { e.stopPropagation(); toggleAudio(); };
+    mainPlayPause.onclick = () => toggleAudio();
+    document.getElementById('mini-next').onclick = (e) => { e.stopPropagation(); nextSong(); };
+    document.getElementById('btn-next').onclick = () => nextSong();
+    document.getElementById('mini-prev').onclick = (e) => { e.stopPropagation(); prevSong(); };
+    document.getElementById('btn-prev').onclick = () => prevSong();
+
+    audio.ontimeupdate = () => { 
+        progressBar.value = (audio.currentTime / audio.duration) * 100 || 0; 
+        const m = Math.floor(audio.currentTime/60); 
+        const s = Math.floor(audio.currentTime%60); 
+        currentTimeEl.innerText = `${m}:${s<10?'0':''}${s}`; 
+    };
+    audio.onloadedmetadata = () => { 
+        const m = Math.floor(audio.duration/60); 
+        const s = Math.floor(audio.duration%60); 
+        totalTimeEl.innerText = `${m}:${s<10?'0':''}${s}`; 
+    };
     progressBar.oninput = () => audio.currentTime = (progressBar.value * audio.duration) / 100;
     volumeControl.oninput = () => audio.volume = volumeControl.value;
     
     document.getElementById('player-trigger-expand').onclick = () => playerContainer.classList.add('is-expanded');
-    document.getElementById('player-trigger-collapse').onclick = (e) => { e.stopPropagation(); playerContainer.classList.remove('is-expanded'); };
+    document.getElementById('player-trigger-expand-2').onclick = () => playerContainer.classList.add('is-expanded');
+    document.getElementById('player-trigger-collapse').onclick = () => playerContainer.classList.remove('is-expanded');
 
-    // VIDEO LOGIC
-    const vBtn = document.getElementById('play-video-btn');
-    const vTag = document.getElementById('main-video');
-    const vOver = document.getElementById('video-overlay');
-
-    vBtn.onclick = () => {
-        vOver.classList.add('hidden');
-        vTag.classList.remove('hidden');
-        if(isPlaying) pauseAudio();
-        vTag.play();
-        vTag.controls = true;
-    };
-
-    // RESTO DE FUNCIONES
-    function setupCarousel(id, prevId, nextId) {
-        const c = document.getElementById(id);
-        document.getElementById(nextId).onclick = () => c.scrollBy({ left: c.offsetWidth, behavior: 'smooth' });
-        document.getElementById(prevId).onclick = () => c.scrollBy({ left: -c.offsetWidth, behavior: 'smooth' });
-    }
-    setupCarousel('carousel-1', 'prev-1', 'next-1');
-
-    const panicBtn = document.getElementById('panic-button');
-    const panicMsg = document.getElementById('panic-message');
-    panicBtn.onclick = () => { panicMsg.classList.remove('hidden'); setTimeout(() => panicMsg.classList.add('animate-fade-in-up', 'opacity-100'), 10); };
-
-    const typewriterContent = [
-        { title: "Cata te queremos en todas tus facetas", text: "Cata rata Esquizofrenica, Reina de la mortadela, Cata Banana, Cata guerrera del colador, Cata que usa binoculares, la que arrastran al trabajo, la que le gusta Five Nights at Freddy's, la que sufre en el trabajo y hasta la cata aesteril o como era?, La que hace chistes poderosos, La cata esñejial, la cata roba pantaletas, la que nos cuenta sus sueños, La flor de la juventud, La que huele patas y demas versiones" },
-        { title: "Feliz Pumpeaños cata que sigas cumpliendo muchos mas", text: "Eres la persona mas racista, homofibica mismo que eres libiana, vengativa, que hace los chistes de humor negro mas feos que he visto, la mas Esquizofrenica, con retraso mental y que hace explicaciones con dinamica de dora en su trabajo que he visto, nunca cambies sigue siendo una persona esñejial🤪" },
-        { title: "Feliz cumpleaños Cata", text: "Cata te amo bebe, puedes vivir escapando, fingir que te gustan las niñas, pero cuando nos besamos hay magia, no la perdamos Cata. Quiero abrazarte por las mañanas y amarte por las noches Cata, te prometo solo amor y felicidad plena Feliz cumpleaños 23 Eres el Ocumo de mi sancocho" }
-    ];
-    let currentPara = 0;
-    const titleEl = document.getElementById('tw-title');
-    const textEl = document.getElementById('tw-text');
-    const containerEl = document.getElementById('typewriter-container');
-
-    function typeEffect(element, text, speed = 40) {
+    // Máquina de escribir
+    function typeEffect(element, text, speed) {
         return new Promise(resolve => {
             let i = 0; element.innerHTML = "";
             const timer = setInterval(() => {
@@ -371,21 +372,57 @@
             }, speed);
         });
     }
+
     async function runTypewriter() {
+        const typewriterContent = [
+            { title: "Cata te queremos en todas tus facetas", text: "Cata rata Esquizofrenica, Reina de la mortadela, Cata Banana, Cata guerrera del colador, Cata que usa binoculares, la que arrastran al trabajo, la que le gusta Five Nights at Freddy's, la que sufre en el trabajo y hasta la cata aesteril o como era?, La que hace chistes poderosos, La cata esñejial, la cata roba pantaletas, la que nos cuenta sus sueños, La flor de la juventud, La que huele patas y demas versiones" },
+            { title: "Feliz Pumpeaños cata que sigas cumpliendo muchos mas", text: "Eres la persona mas racista, homofibica mismo que eres libiana, vengativa, que hace los chistes de humor negro mas feos que he visto, la mas Esquizofrenica, con retraso mental y que hace explicaciones con dinamica de dora en su trabajo que he visto, nunca cambies sigue siendo una persona esñejial🤪" },
+            { title: "Feliz cumpleaños Cata", text: "Cata te amo bebe, puedes vivir escapando, fingir que te gustan las niñas, pero cuando nos besamos hay magia, no la perdamos Cata. Quiero abrazarte por las mañanas y amarte por las noches Cata, te prometo solo amor y felicidad plena Feliz cumpleaños 23 Eres el Ocumo de mi sancocho" }
+        ];
+        let currentPara = 0;
+        const titleEl = document.getElementById('tw-title');
+        const textEl = document.getElementById('tw-text');
+        const container = document.getElementById('typewriter-container');
         while (true) {
             const item = typewriterContent[currentPara];
-            containerEl.classList.remove('fade-out'); containerEl.classList.add('fade-in');
+            container.classList.remove('fade-out'); container.classList.add('fade-in');
             await typeEffect(titleEl, item.title, 50);
-            await new Promise(r => setTimeout(r, 500));
             await typeEffect(textEl, item.text, 30);
-            await new Promise(r => setTimeout(r, 10000));
-            containerEl.classList.remove('fade-in'); containerEl.classList.add('fade-out');
+            
+            // AJUSTE: Espera de 25 segundos para leer el texto
+            await new Promise(r => setTimeout(r, 25000)); 
+            
+            container.classList.remove('fade-in'); container.classList.add('fade-out');
             await new Promise(r => setTimeout(r, 1000));
-            titleEl.innerHTML = ""; textEl.innerHTML = "";
             currentPara = (currentPara + 1) % typewriterContent.length;
         }
     }
-    window.onload = () => { loadSong(0); audio.volume = 0.7; runTypewriter(); };
+
+    // Lógica de Pánico
+    const panicBtn = document.getElementById('panic-button');
+    const panicMsg = document.getElementById('panic-message');
+    panicBtn.onclick = () => {
+        panicMsg.classList.remove('hidden');
+        setTimeout(() => panicMsg.classList.add('opacity-100'), 10);
+    };
+
+    window.onload = () => { 
+        loadSong(0); 
+        audio.volume = 1.0; 
+        runTypewriter(); 
+    };
+
+    const vBtn = document.getElementById('play-video-btn');
+    const vTag = document.getElementById('main-video');
+    const vOver = document.getElementById('video-overlay');
+    vBtn.onclick = () => { vOver.classList.add('hidden'); vTag.classList.remove('hidden'); pauseAudio(); vTag.play(); vTag.controls = true; };
+
+    function setupCarousel(id, prevId, nextId) {
+        const c = document.getElementById(id);
+        document.getElementById(nextId).onclick = () => c.scrollBy({ left: c.offsetWidth, behavior: 'smooth' });
+        document.getElementById(prevId).onclick = () => c.scrollBy({ left: -c.offsetWidth, behavior: 'smooth' });
+    }
+    setupCarousel('carousel-1', 'prev-1', 'next-1');
 </script>
 </body>
 </html>
