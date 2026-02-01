@@ -1,66 +1,46 @@
-<a href="https://github.com/fredjgr">![Fredjgr](./assets/readme-img.gif)</a>
+# 🎂 Birthday Interactive Experience 🚀
 
-<div>
-  <img align="left" width="150" height="158" src="https://tenor.com/es/view/manga-toji-gif-13658133990460757107.gif">
-  <img height="160em" align="center" src="https://github-readme-stats.vercel.app/api?username=Fredjgr&&show_icons=true&border_color=11111111&theme=react&icon_color=666666&&bg_color=111111&locale=en&border_radius=10&include_all_commits=true&count_private=true&show_owner=true"/><img src="https://media.giphy.com/media/cj87CxfRtrUifF3Ryk/giphy.gif" width="100px">
-  <img align="center" width="990" height="8" src="https://media.tenor.com/3HFKgdT-FiQAAAAi/line-rainbow.gif">
-</div>
-
-
-<!-- Talking about you -->
-  <div textalign="center"> <p1>About Me:</p1> </div>
-
-- I’m currently learning __JavaScript__, & __Python__.
-- I’m looking to collaborate!
-- Ask me about anything, I am happy to help.
-- Fun-Fact: If you think it you can program it.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div align="center"> 
-🤝🏻 &nbsp;Connect with Me
-
-<a href="https://www.linkedin.com/in/frederickjgr/"><img src="https://img.shields.io/badge/-LinKdIn%20-0077B5?style=flat&logo=Linkedin&logoColor=white"/></a>
-<a href="mailto:frederickjgr97@gmail.com"><img src="https://img.shields.io/badge/-Gmail-D14836?style=flat&logo=Gmail&logoColor=white"/></a>
-<a href="https://discordapp.com/users/fjgr#7016"><img src="https://img.shields.io/badge/-Discord-%230077B5?style=flat&logo=Discord&logoColor=white"/></a>
-</a>
+<p align="center">
+  <img src="https://img.shields.io/badge/HAPPY-BIRTHDAY-888888?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/VIEW-DEMO-2196F3?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/CHECK-IT_OUT-FF5722?style=for-the-badge" />
 </p>
-</div>
+
+---
+
+## 📝 Descripción del Proyecto
+Este proyecto es una **experiencia web personalizada** diseñada para celebrar un cumpleaños desde una perspectiva de programador. No es solo un mensaje estático; es una interfaz dinámica que combina recuerdos multimedia con un sistema de chat interactivo que emula una terminal de comandos. 
+
+> "El 99.9% de las personas envían un mensaje de texto. Nosotros lo decimos con código." ✨
+
+---
+
+## 🛠️ Tecnologías Utilizadas
+He utilizado un stack limpio y moderno para que la web sea rápida y visualmente impactante:
+
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
+
+---
+
+## ⚙️ Instrucciones de Personalización
+
+Para mantener el estilo profesional y dinámico, sigue estos pasos para editar el contenido:
+
+### 🖼️ Cambiar Fotos y Videos
+El sistema busca automáticamente los archivos en la estructura de carpetas `assets/`:
+* **Fotos:** Guarda tus imágenes en `assets/img/`. Se recomienda usar nombres como `foto1.jpg`, `foto2.jpg`.
+* **Video:** Sustituye el archivo `video.mp4` en la raíz de `assets/`.
+* **Música:** Cambia el archivo en `assets/music/bg-audio.mp3`.
+
+### 💬 Editar el Chat Interactivo
+Para modificar lo que dice la terminal, abre el archivo `script.js` y localiza el bloque de mensajes:
+```javascript
+// Edita estos textos para personalizar el mensaje
+const chatMessages = [
+    "> Iniciando sistema...",
+    "> Cargando recuerdos...",
+    "> ¡Feliz Cumpleaños! 🎉"
+];

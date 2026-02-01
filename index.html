@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Cata HBD</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Dancing+Script:wght@700&family=Pacifico&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec1380",
+                        "chat-green": "#a6d376",
+                        "chat-cream": "#fff9e6",
+                        "background-light": "#f8f6f7",
+                        "background-dark": "#0a0508",
+                        "player-teal": "#13919b",
+                        "player-purple": "#8a3fd5",
+                        "player-bg": "#fcfaff"
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans"],
+                        "playful": ["Dancing Script", "cursive"],
+                        "handwritten": ["Pacifico", "cursive"]
+                    },
+                    keyframes: {
+                        pulseCustom: {
+                            '0%, 100%': { transform: 'scale(1)', boxShadow: '0 0 0 0 rgba(236, 19, 128, 0.7)' },
+                            '50%': { transform: 'scale(1.05)', boxShadow: '0 0 20px 10px rgba(236, 19, 128, 0)' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        gradientX: {
+                            '0%, 100%': { 'background-size': '400% 400%', 'background-position': 'left center' },
+                            '50%': { 'background-size': '400% 400%', 'background-position': 'right center' },
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulseCustom 2s infinite',
+                        'fade-in-up': 'fadeInUp 0.5s ease-out forwards',
+                        'gradient-x': 'gradientX 12s ease infinite',
+                    }
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        body { font-family: "Plus Jakarta Sans", sans-serif; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .chat-font { font-family: 'Dancing Script', cursive; }
+        
+        .bg-magic-feminine {
+            background: linear-gradient(-45deg, #ff7eb3, #ff75c3, #ffa647, #9b51e0, #13919b, #ec1380);
+            background-size: 400% 400%;
+        }
+
+        .chat-bg {
+            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('assets/img/chat-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .music-gradient {
+            background: linear-gradient(90deg, #13919b 0%, #8a3fd5 100%);
+        }
+        .custom-scroll::-webkit-scrollbar { width: 4px; }
+        .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .player-expanded { display: none; }
+        .player-container.is-expanded .player-minimized { display: none; }
+        .player-container.is-expanded .player-expanded { display: block; }
+        
+        #volume-control {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 4px;
+            background: #f1f5f9;
+            border-radius: 999px;
+        }
+        #volume-control::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            background: #13919b;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        #typewriter-container { transition: opacity 0.8s ease-in-out; }
+        .fade-out { opacity: 0; }
+        .fade-in { opacity: 1; }
+        #tw-text::after {
+            content: "|";
+            animation: blink 0.7s infinite;
+            @apply text-primary;
+        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        .glass-button {
+            @apply bg-white/20 text-white font-bold py-4 px-8 rounded-full shadow-lg transition-all active:scale-95 animate-pulse-slow;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(12px);
+        }
+
+        section {
+            backdrop-filter: blur(8px);
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-magic-feminine animate-gradient-x text-white min-h-screen attachment-fixed transition-colors duration-300">
+
+<header class="sticky top-0 z-50 w-full border-b border-white/10 bg-black/10 backdrop-blur-xl">
+    <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
+        <div class="flex items-center gap-4">
+            <div class="flex -space-x-3 items-center">
+                <div class="relative z-10">
+                    <div class="size-11 rounded-full bg-cover bg-center border-2 border-primary" style='background-image: url("assets/img/perfil-cata.jpg");'></div>
+                </div>
+                <div class="relative z-0">
+                    <div class="size-11 rounded-full bg-cover bg-center border-2 border-white/20" style='background-image: url("assets/img/perfil-frodo.jpg");'></div>
+                </div>
+            </div>
+            <div>
+                <h2 class="text-lg font-bold leading-tight">Cata & Frodo's</h2>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="max-w-4xl mx-auto px-4 py-12 space-y-32">
+    <section class="rounded-[2.5rem] overflow-hidden shadow-2xl relative min-h-[800px] flex flex-col chat-bg p-6 md:p-10 border border-white/10">
+        <div class="text-center mb-12">
+            <h1 class="chat-font text-white text-5xl md:text-6xl drop-shadow-[0_4px_4px_rgba(0,0,0,0.5)]">Un día normal de Cata y Frodo</h1>
+        </div>
+        <div class="space-y-8 max-w-2xl mx-auto w-full">
+            <div class="flex items-end justify-end gap-3">
+                <div class="bg-chat-green text-slate-900 px-6 py-3 rounded-[2rem] rounded-br-none shadow-md chat-font text-xl md:text-2xl text-right max-w-[80%]">Sabes que hace un cura en una guarderia?</div>
+                <div class="size-12 rounded-full border-2 border-white shadow-lg shrink-0 overflow-hidden"><img class="w-full h-full object-cover" src="assets/img/perfil-frodo.jpg"/></div>
+            </div>
+            <div class="flex items-end justify-start gap-3">
+                <div class="size-12 rounded-full border-2 border-white shadow-lg shrink-0 overflow-hidden"><img class="w-full h-full object-cover" src="assets/img/perfil-cata.jpg"/></div>
+                <div class="bg-chat-cream text-slate-900 px-6 py-3 rounded-[2rem] rounded-bl-none shadow-md chat-font text-xl md:text-2xl max-w-[80%]">Ay tengo miedo... Que?</div>
+            </div>
+            <div class="flex items-end justify-end gap-3">
+                <div class="bg-chat-green text-slate-900 px-6 py-3 rounded-[2rem] rounded-br-none shadow-md chat-font text-xl md:text-2xl text-right max-w-[80%]">Una despedida de soltero</div>
+                <div class="size-12 rounded-full border-2 border-white shadow-lg shrink-0 overflow-hidden"><img class="w-full h-full object-cover" src="assets/img/perfil-frodo.jpg"/></div>
+            </div>
+            <div class="flex items-end justify-start gap-3">
+                <div class="size-12 rounded-full border-2 border-white shadow-lg shrink-0 overflow-hidden"><img class="w-full h-full object-cover" src="assets/img/perfil-cata.jpg"/></div>
+                <div class="bg-chat-cream text-slate-900 px-6 py-3 rounded-[2rem] rounded-bl-none shadow-md chat-font text-xl md:text-2xl max-w-[80%]">NOOOOOOOOOOOOOOOOOOOO💀☠️</div>
+            </div>
+            <div class="flex items-end justify-end gap-3">
+                <div class="bg-chat-green text-slate-900 px-6 py-3 rounded-[2rem] rounded-br-none shadow-md chat-font text-xl md:text-2xl text-right max-w-[80%]">Mi estimada que rica cola, mas rica con la edad</div>
+                <div class="size-12 rounded-full border-2 border-white shadow-lg shrink-0 overflow-hidden"><img class="w-full h-full object-cover" src="assets/img/perfil-frodo.jpg"/></div>
+            </div>
+            <div class="flex items-end justify-start gap-3">
+                <div class="size-12 rounded-full border-2 border-white shadow-lg shrink-0 overflow-hidden"><img class="w-full h-full object-cover" src="assets/img/perfil-cata.jpg"/></div>
+                <div class="bg-chat-cream text-slate-900 px-6 py-3 rounded-[2rem] rounded-bl-none shadow-md chat-font text-xl md:text-2xl max-w-[80%]">Es toda tuya, hoy me bañe pa que me huelas 😌</div>
+            </div>
+            <div class="flex items-end justify-end gap-3">
+                <div class="bg-chat-green text-slate-900 px-6 py-3 rounded-[2rem] rounded-br-none shadow-md chat-font text-xl md:text-2xl text-right max-w-[80%]">Bueno si se juntan los mares y los rios deberiamos juntar tu cola con el webo mio <br> Me llaman Lomeo😏😈🙂‍↔️</div>
+                <div class="size-12 rounded-full border-2 border-white shadow-lg shrink-0 overflow-hidden"><img class="w-full h-full object-cover" src="assets/img/perfil-frodo.jpg"/></div>
+            </div>
+            <div class="flex items-end justify-start gap-3">
+                <div class="size-12 rounded-full border-2 border-white shadow-lg shrink-0 overflow-hidden"><img class="w-full h-full object-cover" src="assets/img/perfil-cata.jpg"/></div>
+                <div class="bg-chat-cream text-slate-900 px-6 py-3 rounded-[2rem] rounded-bl-none shadow-md chat-font text-xl md:text-2xl max-w-[80%]">Licenciadoo que romantico😏</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="space-y-8 relative p-8 rounded-[2.5rem] border border-white/10 shadow-2xl">
+        <div class="text-center group">
+            <h3 class="text-5xl md:text-6xl font-black font-display text-red-600 uppercase tracking-tighter">NUESTROS MEJORES MOMENTOS</h3>
+            <div id="typewriter-container" class="mt-8 min-h-[150px] flex flex-col items-center justify-center px-4">
+                <h4 id="tw-title" class="text-2xl font-bold text-primary mb-2 min-h-[1.5em] text-center"></h4>
+                <p id="tw-text" class="text-lg md:text-xl text-white italic max-w-2xl leading-relaxed min-h-[4em] text-center"></p>
+            </div>
+        </div>
+        <div class="relative carousel-stack bg-white/5 p-4 rounded-3xl border border-white/10 shadow-inner">
+            <div class="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar gap-4 rounded-2xl scroll-smooth" id="carousel-1">
+                <script>
+                    for(let i=1; i<=21; i++) {
+                        document.write(`<div class="snap-center shrink-0 w-full h-[600px] bg-black/40 rounded-xl overflow-hidden flex items-center justify-center"><img class="h-full w-full object-contain" src="assets/img/momentos/imgcarruselmoment${i}.jpg"></div>`);
+                    }
+                </script>
+            </div>
+            <button class="absolute left-8 top-1/2 -translate-y-1/2 size-14 rounded-full bg-black/60 hover:bg-primary backdrop-blur-md flex items-center justify-center text-white z-10" id="prev-1">
+                <span class="material-symbols-outlined !text-3xl">chevron_left</span>
+            </button>
+            <button class="absolute right-8 top-1/2 -translate-y-1/2 size-14 rounded-full bg-black/60 hover:bg-primary backdrop-blur-md flex items-center justify-center text-white z-10" id="next-1">
+                <span class="material-symbols-outlined !text-3xl">chevron_right</span>
+            </button>
+        </div>
+    </section>
+
+    <section class="space-y-8 text-center p-8 rounded-[2.5rem] border border-white/10">
+        <h3 class="text-3xl font-bold font-display text-primary uppercase tracking-widest">Un mensaje para ti</h3>
+        <div class="w-full max-w-3xl mx-auto rounded-[2.5rem] bg-black/20 overflow-hidden relative border border-white/10 shadow-2xl">
+            <video id="main-video" class="hidden w-full h-auto block mx-auto">
+                <source src="assets/video.mp4" type="video/mp4">
+            </video>
+            
+            <div id="video-overlay" class="aspect-video flex items-center justify-center bg-black/40">
+                <button class="size-24 rounded-full bg-primary/90 flex items-center justify-center text-white z-20 hover:scale-110 transition-transform shadow-lg" id="play-video-btn">
+                    <span class="material-symbols-outlined !text-5xl">play_arrow</span>
+                </button>
+                <img class="absolute inset-0 w-full h-full object-cover opacity-60" src="assets/img/video-thumb.jpg"/>
+            </div>
+        </div>
+    </section>
+
+    <section class="flex flex-col items-center justify-center py-20 bg-transparent border-none shadow-none">
+        <button id="panic-button" class="glass-button">EN CASO DE PELIGRO ROMPA EL VIDRIO 🚨</button>
+        <div id="panic-message" class="hidden opacity-0 bg-white text-slate-900 font-bold p-6 rounded-2xl shadow-2xl border-4 border-primary text-center max-w-sm mt-6">
+            <p class="text-2xl mb-2">📢 ATENCIÓN:</p>
+            <p class="text-xl">Grite y digite <span class="text-primary">Go/SocorroDeus</span></p>
+        </div>
+    </section>
+</main>
+
+<div class="player-container fixed bottom-6 left-6 z-[100]" id="music-player">
+    <div class="player-minimized music-gradient w-[280px] h-[64px] rounded-full shadow-2xl px-5 flex items-center justify-between text-white cursor-pointer hover:scale-105 transition-all" id="player-trigger-expand">
+        <div class="flex items-center gap-3 overflow-hidden">
+            <button class="size-8 rounded-full bg-white/20 flex items-center justify-center"><span class="material-symbols-outlined !text-xl">play_arrow</span></button>
+            <div class="overflow-hidden">
+                <p class="font-bold text-xs truncate" id="mini-title">Cata, te amo bebé</p>
+                <p class="text-[9px] opacity-70">Nuestra Playlist</p>
+            </div>
+        </div>
+        <span class="material-symbols-outlined !text-xl">expand_less</span>
+    </div>
+    <div class="player-expanded w-[340px] bg-white rounded-[2.5rem] shadow-2xl border border-white/20 overflow-hidden text-slate-900">
+        <div class="bg-player-purple px-6 py-4 flex items-center justify-between text-white">
+            <span class="font-bold text-sm tracking-wide">Reproductor de Música</span>
+            <button class="hover:bg-white/20 rounded-full p-1 transition-colors" id="player-trigger-collapse"><span class="material-symbols-outlined text-lg">expand_more</span></button>
+        </div>
+        <div class="p-6">
+            <div class="aspect-square w-48 mx-auto rounded-3xl shadow-2xl music-gradient flex items-center justify-center mb-6 overflow-hidden relative">
+                <span class="material-symbols-outlined text-white/40 !text-7xl">music_note</span>
+            </div>
+            <div class="text-center mb-6">
+                <h4 class="font-extrabold text-lg leading-tight text-slate-800" id="current-track-title">Cata, te amo bebé</h4>
+                <p class="text-[11px] text-slate-400 font-bold uppercase tracking-wider mt-1">Canciones para Cata</p>
+            </div>
+            <div class="space-y-1 mb-6 px-2">
+                <input type="range" id="main-progress-bar" value="0" min="0" max="100" class="w-full h-1.5 bg-slate-100 rounded-full appearance-none cursor-pointer accent-player-teal">
+                <div class="flex justify-between text-[10px] font-bold text-slate-400">
+                    <span id="current-time">0:00</span>
+                    <span id="total-time">0:00</span>
+                </div>
+            </div>
+            <div class="flex items-center justify-center gap-6 mb-8">
+                <button class="text-slate-400 hover:text-player-teal" id="btn-prev"><span class="material-symbols-outlined !text-2xl">skip_previous</span></button>
+                <button class="size-14 rounded-full music-gradient text-white flex items-center justify-center hover:scale-110 transition-transform shadow-lg shadow-player-purple/40" id="btn-play-pause"><span class="material-symbols-outlined !text-3xl">play_arrow</span></button>
+                <button class="text-slate-400 hover:text-player-teal" id="btn-next"><span class="material-symbols-outlined !text-2xl">skip_next</span></button>
+            </div>
+            <div class="flex items-center gap-3 px-4 mb-8">
+                <span class="material-symbols-outlined text-slate-400 text-lg">volume_down</span>
+                <input type="range" id="volume-control" min="0" max="1" step="0.01" value="0.7" class="flex-1">
+                <span class="material-symbols-outlined text-slate-400 text-lg">volume_up</span>
+            </div>
+            <div class="border-t border-slate-100 pt-5"><div class="max-h-36 overflow-y-auto space-y-2 custom-scroll pr-1" id="playlist-container"></div></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const songs = [
+        { title: "Cata, te amo bebé", src: "assets/music/catateamobebe.mp3" },
+        { title: "Bibi Babydoll", src: "assets/music/bibi.mp3" },
+        { title: "AI SUEEEER", src: "assets/music/cancionteamobebe.mp3" }
+    ];
+    let currentSongIndex = 0;
+    const audio = new Audio();
+    let isPlaying = false;
+
+    const playerContainer = document.getElementById('music-player');
+    const btnPlayPause = document.getElementById('btn-play-pause');
+    const progressBar = document.getElementById('main-progress-bar');
+    const volumeControl = document.getElementById('volume-control');
+    const currentTimeEl = document.getElementById('current-time');
+    const totalTimeEl = document.getElementById('total-time');
+    const trackTitle = document.getElementById('current-track-title');
+    const miniTitle = document.getElementById('mini-title');
+    const playlistContainer = document.getElementById('playlist-container');
+
+    function loadSong(index) {
+        currentSongIndex = index;
+        audio.src = songs[index].src;
+        trackTitle.innerText = songs[index].title;
+        miniTitle.innerText = songs[index].title;
+        renderPlaylist();
+    }
+
+    function renderPlaylist() {
+        playlistContainer.innerHTML = '';
+        songs.forEach((song, index) => {
+            const isActive = index === currentSongIndex;
+            const item = document.createElement('div');
+            item.className = `flex items-center gap-3 p-2 rounded-xl cursor-pointer transition-all ${isActive ? 'bg-player-teal/10' : 'hover:bg-slate-50'}`;
+            item.innerHTML = `<div class="size-8 rounded-lg ${isActive ? 'music-gradient' : 'bg-slate-100'} flex items-center justify-center shrink-0"><span class="material-symbols-outlined ${isActive ? 'text-white' : 'text-slate-400'} !text-sm">graphic_eq</span></div><div class="overflow-hidden flex-1"><p class="text-[11px] font-bold text-slate-800 truncate">${song.title}</p></div>`;
+            item.onclick = () => { loadSong(index); playAudio(); };
+            playlistContainer.appendChild(item);
+        });
+    }
+
+    function playAudio() { audio.play(); isPlaying = true; btnPlayPause.innerHTML = '<span class="material-symbols-outlined !text-3xl">pause</span>'; }
+    function pauseAudio() { audio.pause(); isPlaying = false; btnPlayPause.innerHTML = '<span class="material-symbols-outlined !text-3xl">play_arrow</span>'; }
+
+    btnPlayPause.onclick = () => isPlaying ? pauseAudio() : playAudio();
+    document.getElementById('btn-next').onclick = () => { currentSongIndex = (currentSongIndex + 1) % songs.length; loadSong(currentSongIndex); playAudio(); };
+    document.getElementById('btn-prev').onclick = () => { currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length; loadSong(currentSongIndex); playAudio(); };
+
+    audio.ontimeupdate = () => { progressBar.value = (audio.currentTime / audio.duration) * 100 || 0; const m = Math.floor(audio.currentTime/60); const s = Math.floor(audio.currentTime%60); currentTimeEl.innerText = `${m}:${s<10?'0':''}${s}`; };
+    audio.onloadedmetadata = () => { const m = Math.floor(audio.duration/60); const s = Math.floor(audio.duration%60); totalTimeEl.innerText = `${m}:${s<10?'0':''}${s}`; };
+    progressBar.oninput = () => audio.currentTime = (progressBar.value * audio.duration) / 100;
+    volumeControl.oninput = () => audio.volume = volumeControl.value;
+    
+    document.getElementById('player-trigger-expand').onclick = () => playerContainer.classList.add('is-expanded');
+    document.getElementById('player-trigger-collapse').onclick = (e) => { e.stopPropagation(); playerContainer.classList.remove('is-expanded'); };
+
+    // VIDEO LOGIC
+    const vBtn = document.getElementById('play-video-btn');
+    const vTag = document.getElementById('main-video');
+    const vOver = document.getElementById('video-overlay');
+
+    vBtn.onclick = () => {
+        vOver.classList.add('hidden');
+        vTag.classList.remove('hidden');
+        if(isPlaying) pauseAudio();
+        vTag.play();
+        vTag.controls = true;
+    };
+
+    // RESTO DE FUNCIONES
+    function setupCarousel(id, prevId, nextId) {
+        const c = document.getElementById(id);
+        document.getElementById(nextId).onclick = () => c.scrollBy({ left: c.offsetWidth, behavior: 'smooth' });
+        document.getElementById(prevId).onclick = () => c.scrollBy({ left: -c.offsetWidth, behavior: 'smooth' });
+    }
+    setupCarousel('carousel-1', 'prev-1', 'next-1');
+
+    const panicBtn = document.getElementById('panic-button');
+    const panicMsg = document.getElementById('panic-message');
+    panicBtn.onclick = () => { panicMsg.classList.remove('hidden'); setTimeout(() => panicMsg.classList.add('animate-fade-in-up', 'opacity-100'), 10); };
+
+    const typewriterContent = [
+        { title: "Cata te queremos en todas tus facetas", text: "Cata rata Esquizofrenica, Reina de la mortadela, Cata Banana, Cata guerrera del colador, Cata que usa binoculares, la que arrastran al trabajo, la que le gusta Five Nights at Freddy's, la que sufre en el trabajo y hasta la cata aesteril o como era?, La que hace chistes poderosos, La cata esñejial, la cata roba pantaletas, la que nos cuenta sus sueños, La flor de la juventud, La que huele patas y demas versiones" },
+        { title: "Feliz Pumpeaños cata que sigas cumpliendo muchos mas", text: "Eres la persona mas racista, homofibica mismo que eres libiana, vengativa, que hace los chistes de humor negro mas feos que he visto, la mas Esquizofrenica, con retraso mental y que hace explicaciones con dinamica de dora en su trabajo que he visto, nunca cambies sigue siendo una persona esñejial🤪" },
+        { title: "Feliz cumpleaños Cata", text: "Cata te amo bebe, puedes vivir escapando, fingir que te gustan las niñas, pero cuando nos besamos hay magia, no la perdamos Cata. Quiero abrazarte por las mañanas y amarte por las noches Cata, te prometo solo amor y felicidad plena Feliz cumpleaños 23 Eres el Ocumo de mi sancocho" }
+    ];
+    let currentPara = 0;
+    const titleEl = document.getElementById('tw-title');
+    const textEl = document.getElementById('tw-text');
+    const containerEl = document.getElementById('typewriter-container');
+
+    function typeEffect(element, text, speed = 40) {
+        return new Promise(resolve => {
+            let i = 0; element.innerHTML = "";
+            const timer = setInterval(() => {
+                if (i < text.length) { element.innerHTML += text.charAt(i); i++; } 
+                else { clearInterval(timer); resolve(); }
+            }, speed);
+        });
+    }
+    async function runTypewriter() {
+        while (true) {
+            const item = typewriterContent[currentPara];
+            containerEl.classList.remove('fade-out'); containerEl.classList.add('fade-in');
+            await typeEffect(titleEl, item.title, 50);
+            await new Promise(r => setTimeout(r, 500));
+            await typeEffect(textEl, item.text, 30);
+            await new Promise(r => setTimeout(r, 10000));
+            containerEl.classList.remove('fade-in'); containerEl.classList.add('fade-out');
+            await new Promise(r => setTimeout(r, 1000));
+            titleEl.innerHTML = ""; textEl.innerHTML = "";
+            currentPara = (currentPara + 1) % typewriterContent.length;
+        }
+    }
+    window.onload = () => { loadSong(0); audio.volume = 0.7; runTypewriter(); };
+</script>
+</body>
+</html>
