@@ -2,8 +2,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/HAPPY-BIRTHDAY-888888?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/VIEW-DEMO-2196F3?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/CHECK-IT_OUT-FF5722?style=for-the-badge" />
+
 </p>
 
 ---
@@ -43,4 +42,5 @@ const chatMessages = [
     "> Iniciando sistema...",
     "> Cargando recuerdos...",
     "> ¡Feliz Cumpleaños! 🎉"
+
 ];
