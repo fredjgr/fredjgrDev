@@ -212,14 +212,15 @@
     <section class="space-y-8 text-center p-8 rounded-[2.5rem] border border-white/10">
         <h3 class="text-3xl font-bold font-display text-primary uppercase tracking-widest">Un mensaje para ti</h3>
         <div class="w-full max-w-3xl mx-auto rounded-[2.5rem] bg-black/20 overflow-hidden relative border border-white/10 shadow-2xl">
-            <video id="main-video" class="hidden w-full h-auto block mx-auto">
+            <video id="main-video" class="hidden w-full h-auto block mx-auto" poster="assets/img/portada-video.jpg">
                 <source src="assets/video.mp4" type="video/mp4">
             </video>
+            
             <div id="video-overlay" class="aspect-video flex items-center justify-center bg-black/40">
                 <button class="size-24 rounded-full bg-primary/90 flex items-center justify-center text-white z-20 hover:scale-110 transition-transform shadow-lg" id="play-video-btn">
                     <span class="material-symbols-outlined !text-5xl">play_arrow</span>
                 </button>
-                <img class="absolute inset-0 w-full h-full object-cover opacity-60" src="assets/img/video-thumb.jpg"/>
+                <img class="absolute inset-0 w-full h-full object-cover opacity-80" src="assets/img/portada-video.jpg"/>
             </div>
         </div>
     </section>
@@ -426,3 +427,4 @@
 </script>
 </body>
 </html>
+
